@@ -33,11 +33,19 @@ class CouponsNFT(
         self.data.ledger[token_id] = owner
         self.data.token_metadata[token_id] = sp.record(
             token_id=token_id, token_info=sp.map({
+                "name": sp.utils.bytes_of_string("Coupon"),
+                "rights":sp.utils.bytes_of_string("No License / All Rights Reserved"),
+                "symbol": sp.utils.bytes_of_string("CPN"),
+                "decimals": sp.utils.bytes_of_string("%d" % 0),
+                "displayUri": sp.utils.bytes_of_string("ipfs://QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC"),
+                "artifactUri": sp.utils.bytes_of_string("ipfs://QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC"),
+                "thumbnailUri": sp.utils.bytes_of_string("ipfs://QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC"),
+                "image": sp.utils.bytes_of_string("ipfs://QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC"),
+                "description": self.data.description,
                 "coupon_code": self.data.coupon_code,
                 "merchant": self.data.merchant,
                 "description": self.data.description,
                 "expiration_date": self.data.expiration_date,
-                "": sp.utils.bytes_of_string("http://www.example.com")
             })
         )
         self.data.last_token_id += 1
@@ -79,10 +87,10 @@ def test():
     sc = sp.test_scenario()
     alice = sp.test_account("alice")
     bob = sp.test_account("bob")
-    admin = sp.test_account("admin")
+    admin = sp.address("tz1WUKjXiGKguuYAvB1NnmGdYt89sSdi9gzv")
     sc.show(sp.record(alice=alice.address, bob=bob.address))
 
-    couponsFactory = CouponsFactory(admin.address)
+    couponsFactory = CouponsFactory(admin)
 
     sc.h1("Deploying CouponsFactory")
 
@@ -90,9 +98,3 @@ def test():
 
     couponsFactory.create_couponNFT_contract(total_supply=2, merchant=sp.utils.bytes_of_string("Amazon"), expiration_date=sp.timestamp(1234567890), coupon_code=sp.utils.bytes_of_string("AMAZON10"), coupon_id=1, description=sp.utils.bytes_of_string("10% OFF FOR AMAZON"), metadata=sp.utils.metadata_of_url('http://www.example.com')).run(sender=admin)
     couponsFactory.create_couponNFT_contract(total_supply=10, merchant=sp.utils.bytes_of_string('Lazada'), expiration_date=sp.timestamp(1235556680), coupon_code=sp.utils.bytes_of_string('LAZADA20'), coupon_id=1, description=sp.utils.bytes_of_string('20% Off LAZADA'), metadata=sp.utils.metadata_of_url('http://www.example.com')).run(sender=admin)
-
-sp.add_compilation_target(
-    "NFT Coupons Factory Deployment",
-    CouponsFactory(admin=sp.address("tz1YvE7Sfo92ueEPEdZceNWd5MWNeMNSt16L"))
-)
-
