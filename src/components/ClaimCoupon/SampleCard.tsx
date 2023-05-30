@@ -4,7 +4,7 @@ import { Avatar, Card } from 'antd';
 
 const { Meta } = Card;
 
-const SampleCard = ({image_src}: {image_src:string}) => (
+const SampleCard = ({image_src, title, description}: {image_src:string, title: string, description: string}) => (
   <Card
     style={{ width: 300 , margin: '10px'}}
     cover={
@@ -21,8 +21,8 @@ const SampleCard = ({image_src}: {image_src:string}) => (
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
+      title={title}
+      description={description}
     />
   </Card>
 );
