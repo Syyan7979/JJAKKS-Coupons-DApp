@@ -1,6 +1,44 @@
+.claim-page-title{
+    font-size: 3em;
+}
+
 .claim-coupon {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.cpn-title{
+    color: black;
+    font-size: 2em;
+    font-weight: 500;
+    padding: 0;
+}
+
+.cpn-merchant{
+    color: #bbb;
+    display: inline;
+    margin-right: 0.5em;
+}
+
+.cpn-valid-until{
+    color: #bbb;
+    display: inline;
+    margin-left: 0.5em;
+}
+
+.cpn-description{
+    color: #000;
+}
+
+hr.solid {
+    border-top: 3px solid #bbb;
+  }
+
+span {
+    content: "\00B7";
+    font-size: 2em;
+    color: #bbb;
+}
+

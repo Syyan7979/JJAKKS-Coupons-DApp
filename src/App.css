@@ -8,7 +8,6 @@ html, body {
 }
 .nav-menu {
   background-color: #20BDBE;
-
 }
 
 .ant-layout .ant-layout-sider-children {
@@ -21,4 +20,50 @@ html, body {
 
 .ant-menu-item-selected {
   background-color: #f5f5f550 !important;
+}
+.right-align{
+  display: flex;
+  justify-content: flex-end;
+  margin: 1em 1em;
+
+}
+
+.connect-wallet-btn {
+  margin: 0;
+  background-color: #20BDBE;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.connect-wallet-btn:hover,
+.connect-wallet-btn:focus {
+  background-color: #07c;
+}
+
+.connect-wallet-btn:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.connect-wallet-btn:active {
+  background-color: #0064bd;
+  box-shadow: none;
 }
