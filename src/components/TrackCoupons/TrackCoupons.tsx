@@ -5,27 +5,27 @@ const TrackCoupons = () => {
     return(
         <div className='trackCoupons'>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
             <h1> MATA-TRACK NG ADMIN MGA COUPONS DITO </h1>
-            <p> Palitan nalang nang naaayon sa pangangailangan</p>
+            <p> Palitan nalang ang content nito nang naaayon sa pangangailangan</p>
         </div>
     )
 }

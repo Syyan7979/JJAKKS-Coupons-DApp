@@ -18,3 +18,7 @@ html, body {
 .sider {
   position: fixed;
 }
+
+.ant-menu-item-selected {
+  background-color: #f5f5f550 !important;
+}

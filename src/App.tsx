@@ -16,13 +16,17 @@ const App: React.FC = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  // Declaration of User enum
   enum User {
     Admin,
     Client
   }
 
+  // User type (state)
+  // Changes depending on current hash of active account
   const [userType, setUserType] = useState(User.Client)
 
+  // Menu items for ADMIN
   const adminMenuItems = [
     {
       key: 'create',
@@ -33,6 +37,8 @@ const App: React.FC = () => {
       label: "Track Coupons",
     }
   ];
+
+  // Menu items for CLIENT
   const clientMenuItems = [
     {
       key: 'claim',
@@ -40,11 +46,16 @@ const App: React.FC = () => {
     }
   ];
 
-
+  // Menu items (state)
+  // Changes depending on user type
   const [menuItems, setMenuItems] = useState(clientMenuItems)
+  
+  // Page (state)
+  // Changes depending on selected menu item
   const [page, setPage] = useState(menuItems[0].key);
 
-
+  // Function for displaying page content
+  // Returns the component corresponding to the page content upon function call
   const displayContent = (page: string) => {
     if (userType == User.Client) {
       switch (page) {
@@ -62,6 +73,7 @@ const App: React.FC = () => {
     }
   };
 
+  // UI section
   return (
     <Layout hasSider>
       <Sider
@@ -93,7 +105,7 @@ const App: React.FC = () => {
             {displayContent(page)}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>JJAKK ©2023</Footer>
       </Layout>
     </Layout>
   );
