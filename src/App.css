@@ -8,4 +8,13 @@ html, body {
 }
 .nav-menu {
   background-color: #20BDBE;
+
+}
+
+.ant-layout .ant-layout-sider-children {
+  background-color: #20BDBE;
+}
+
+.sider {
+  position: fixed;
 }

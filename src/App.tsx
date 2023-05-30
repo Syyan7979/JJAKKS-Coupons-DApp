@@ -1,45 +1,97 @@
-import React from 'react';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import React, { useState } from 'react';
 import './App.css'
 
+import { Layout, Menu, theme } from 'antd';
+
+// Custom components
+import ClaimCoupon from './components/ClaimCoupon/ClaimCoupon'
+import CreateCoupon from './components/CreateCoupon/CreateCoupon';
+import TrackCoupons from './components/TrackCoupons/TrackCoupons';
+
 const { Header, Content, Footer, Sider } = Layout;
+
 
 const App: React.FC = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  enum User {
+    Admin,
+    Client
+  }
+
+  const [userType, setUserType] = useState(User.Client)
+
+  const adminMenuItems = [
+    {
+      key: 'create',
+      label: "Create Coupon",
+    },
+    {
+      key: 'track',
+      label: "Track Coupons",
+    }
+  ];
+  const clientMenuItems = [
+    {
+      key: 'claim',
+      label: "Claim Coupons",
+    }
+  ];
+
+
+  const [menuItems, setMenuItems] = useState(clientMenuItems)
+  const [page, setPage] = useState(menuItems[0].key);
+
+
+  const displayContent = (page: string) => {
+    if (userType == User.Client) {
+      switch (page) {
+        case 'claim':
+          return(<ClaimCoupon />);
+      }
+    } else {
+  
+      switch (page) {
+        case 'create':
+          return (<CreateCoupon />);
+        case 'track':
+          return (<TrackCoupons />);
+      }
+    }
+  };
+
   return (
-    <Layout className='main-app'>
+    <Layout hasSider>
       <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
         }}
       >
-        <div className="demo-logo-vertical" />
+        <div className="logo" >
+          <img src={require("./assets/couffer-logo-white.png")} alt="Couffer Logo" style={{width: "150px", marginLeft: "auto", marginRight: "auto", display: "block"}}/>
+        </div>
         <Menu
           theme="dark"
+          className='nav-menu'
           mode="inline"
-          defaultSelectedKeys={['4']}
-          items={[UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-            (icon, index) => ({
-              key: String(index + 1),
-              icon: React.createElement(icon),
-              label: `nav ${index + 1}`,
-            }),
-          )}
+          defaultSelectedKeys={[menuItems[0].key]}
+          items={menuItems}
+          onClick={(e) => setPage(e.key)}
         />
       </Sider>
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: '24px 16px 0' }}>
-          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>content</div>
+      <Layout className="site-layout" style={{ marginLeft: 200 }}>
+        <Header style={{ padding: 0, background: colorBgContainer}} />
+        <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+          <div style={{ padding: 24, textAlign: 'center', background: colorBgContainer }}>
+            {displayContent(page)}
+          </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
       </Layout>
@@ -48,3 +100,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
