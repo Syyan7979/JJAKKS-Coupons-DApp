@@ -1,20 +1,26 @@
 import React from 'react';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, EllipsisOutlined,} from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 
 import './styles.css'
 const { Meta } = Card;
 
-const CouponCard = ({title, description,merchant,expiration_date}: { title: string, description: string, merchant: string, expiration_date: string}) => (
+const CouponCard = ({image_src, coupon_code, description,merchant,expiration_date}: { image_src:string, coupon_code: string, description: string, merchant: string, expiration_date: string}) => (
   <Card
     style={{ width: 300 , margin: '10px',}}
+    cover={
+      <img
+        alt="example"
+        src={image_src}
+      />
+    }
+
     actions={[
-      <SettingOutlined key="setting" rev={undefined} />,
-      <EditOutlined key="edit" rev={undefined} />,
-      <EllipsisOutlined key="ellipsis" rev={undefined} />,
+      <PlusCircleOutlined key="claim" rev={undefined} label='Claim Coupon'/>,
+      <EllipsisOutlined key="details" rev={undefined} label='See Details'/>,
     ]}
   >
-      <div className='cpn-title'>{title}</div>
+      <div className='cpn-coupon_code'>{coupon_code}</div>
       <div className='cpn-merchant'>{merchant}</div>
       <span>&#183;</span>
       <div className='cpn-valid-until'>VALID UNTIL {expiration_date}</div>

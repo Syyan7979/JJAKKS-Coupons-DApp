@@ -21,6 +21,9 @@ export async function create_couponNFT_contract(total_supply, merchant, expirati
     }
 }
 
+// TO DO: Get contract addr from admin contract bigmap
+
+
 // Coupon Contract Entrypoints
 // contract_addr is found at storage > bigmap of KT1UzUMDoR3MCwcLvJGvErqw357XR9M7VoKT
 export async function burn(contract_addr) {
@@ -34,7 +37,8 @@ export async function burn(contract_addr) {
     }
 }
 
-export async function mint(contract_addr,owner) {
+// AKA mint
+export async function claim_coupon(contract_addr,owner) {
     try {
         const contract = await tezos.wallet.at(contract_addr);
         const op = await contract.methods.mint().send({
