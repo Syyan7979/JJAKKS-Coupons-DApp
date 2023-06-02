@@ -61,3 +61,21 @@ export async function transfer(contract_addr) {
     }
 }
 
+
+// Access bigmap
+export async function access_contract() {
+    try {
+        const contract = (await tezos.contract.at("KT1UzUMDoR3MCwcLvJGvErqw357XR9M7VoKT")).storage()
+        .then((mystorage) => {
+            return mystorage['couponsNFTContracts'].get(1);
+        })
+        .then((valueBigMap) => {
+            // console.log(`The value associated with the specified key of the bigMap is ${valueBigMap}.`);
+            return valueBigMap
+        });
+        await contract.confirmation(1);
+    } catch (err) {
+        throw err;
+    }
+}
+
