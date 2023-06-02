@@ -37,14 +37,15 @@ export async function burn(contract_addr) {
     }
 }
 
+// TO DO: SUCCESSFULLY CLAIM COUPON
 // AKA mint
-export async function claim_coupon(contract_addr,owner) {
+export async function claim_coupon(contract_addr) {
     try {
         const contract = await tezos.wallet.at(contract_addr);
-        const op = await contract.methods.mint().send({
-            mint: owner,
-        })
-        await op.confirmation(1);
+        const op = await contract.methods.mint().send();
+        console.log("Claiming coupon in progress...");
+        await op.confirmation(); // Wait for confirmation, default confirmation level is used
+        console.log("Coupon claimed successfully!");
     } catch (err) {
         throw err;
     }
@@ -63,19 +64,53 @@ export async function transfer(contract_addr) {
 
 
 // Access bigmap
-export async function access_contract() {
+export async function access_contract(index) {
     try {
-        const contract = (await tezos.contract.at("KT1UzUMDoR3MCwcLvJGvErqw357XR9M7VoKT")).storage()
-        .then((mystorage) => {
-            return mystorage['couponsNFTContracts'].get(1);
-        })
-        .then((valueBigMap) => {
-            // console.log(`The value associated with the specified key of the bigMap is ${valueBigMap}.`);
-            return valueBigMap
-        });
-        await contract.confirmation(1);
+        const mainContract = await tezos.contract.at("KT1UzUMDoR3MCwcLvJGvErqw357XR9M7VoKT");
+        const mainStorage = await mainContract.storage();
+        const nftContractAddress = await mainStorage['couponsNFTContracts'].get(index).then(value => value.toString());
+
+        const nftContract = await tezos.contract.at(nftContractAddress);
+        const nftStorage = await nftContract.storage();
+
+        console.log("The storage of the NFT contract is:", nftStorage);
+        return nftStorage
     } catch (err) {
         throw err;
     }
 }
 
+export async function access_contract_adress(index) {
+    try {
+      const mainContract = await tezos.wallet.at("KT1UzUMDoR3MCwcLvJGvErqw357XR9M7VoKT");
+      const mainStorage = await mainContract.storage();
+      const nftContractAddress = await mainStorage['couponsNFTContracts'].get(index).then(value => value.toString());
+  
+      if (!nftContractAddress || nftContractAddress === 'undefined') {
+        throw new Error("NFT contract address not found");
+      }
+  
+      return nftContractAddress;
+    } catch (err) {
+      throw err;
+    }
+  }
+  
+  
+
+
+
+
+// Access bigmap
+export async function contract_count() {
+    try {
+      const contract = await tezos.contract.at("KT1UzUMDoR3MCwcLvJGvErqw357XR9M7VoKT");
+      const storage = await contract.storage();
+      const contractCount = storage['couponsNFTContractsCount'];
+  
+      console.log(`The contract count is ${contractCount}.`);
+      return contractCount;
+    } catch (err) {
+      throw err;
+    }
+  }
