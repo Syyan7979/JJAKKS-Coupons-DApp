@@ -1,6 +1,6 @@
 // Call opeartions
 import { tezos } from "./tezos";
-import { wallet } from "./wallet";
+import { getAccount } from "./wallet";
 
 // Admin functions Entrypoints
 export async function create_couponNFT_contract(total_supply, merchant, expiration_date, coupon_code, coupon_id, description, metadata) {
@@ -29,8 +29,17 @@ export async function create_couponNFT_contract(total_supply, merchant, expirati
 export async function burn(contract_addr) {
     try {
         const contract = await tezos.wallet.at(contract_addr);
-        const op = await contract.methods.create_couponNFT_contract().send({
-        })
+        console.log("Burning coupon in progress...");
+        const storage = await contract.storage();
+        const op = await contract.methods.burn(
+            [
+                {
+                  from_: await getAccount(),
+                  token_id: storage.last_token_id.toNumber() - 1,
+                  amount: 1,
+                }
+            ]
+        ).send()
         await op.confirmation(1);
     } catch (err) {
         throw err;
@@ -42,7 +51,7 @@ export async function burn(contract_addr) {
 export async function claim_coupon(contract_addr) {
     try {
         const contract = await tezos.wallet.at(contract_addr);
-        const op = await contract.methods.mint().send();
+        const op = await contract.methods.mint(await getAccount()).send();
         console.log("Claiming coupon in progress...");
         await op.confirmation(); // Wait for confirmation, default confirmation level is used
         console.log("Coupon claimed successfully!");
@@ -52,10 +61,23 @@ export async function claim_coupon(contract_addr) {
 }
 
 
-export async function transfer(contract_addr) {
+export async function transfer(contract_addr, to_addr) {
     try {
         const contract = await tezos.wallet.at(contract_addr);
-        const op = await contract.methods.mint().send({})
+        const op = await contract.methods.transfer(
+            [
+                {
+                    from_: await getAccount(),
+                    txs: [
+                        {
+                            to_: to_addr,
+                            token_id: 0,
+                            amount: 1,
+                        },
+                    ],
+                }
+            ]
+        ).send()
         await op.confirmation(1);
     } catch (err) {
         throw err;
