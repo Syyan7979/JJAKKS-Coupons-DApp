@@ -34,7 +34,7 @@ const CouponCard = ({ index, image_src, coupon_code, description, merchant, expi
     >
       <div className='cpn-coupon_code'>{coupon_code}</div>
       <div className='cpn-merchant'>{merchant}</div>
-      <span>&#183;</span>
+      <span className='hor-line'>&#183;</span>
       <div className='cpn-valid-until'>VALID UNTIL {expiration_date}</div>
       <hr className="solid"></hr>
       <div className='cpn-description'>{description}</div>
