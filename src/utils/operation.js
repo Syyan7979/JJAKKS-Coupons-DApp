@@ -95,7 +95,9 @@ export async function access_contract(index) {
         const nftContract = await tezos.contract.at(nftContractAddress);
         const nftStorage = await nftContract.storage();
 
+            
         console.log("The storage of the NFT contract is:", nftStorage);
+
         return nftStorage
     } catch (err) {
         throw err;
