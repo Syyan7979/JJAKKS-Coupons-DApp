@@ -29,7 +29,7 @@ const CouponCard = ({ index, image_src, coupon_code, description, merchant, expi
       cover={<img alt="example" src={image_src} />}
       actions={[
         <PlusCircleOutlined key="claim" rev={undefined}  onClick={handleClaimCoupon} />, // Add onClick handler to the PlusCircleOutlined icon
-        <EllipsisOutlined key="details" rev={undefined} label='See Details' />,
+        // <EllipsisOutlined key="details" rev={undefined} label='See Details' />,
       ]}
     >
       <div className='cpn-coupon_code'>{coupon_code}</div>

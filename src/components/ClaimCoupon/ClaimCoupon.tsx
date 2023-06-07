@@ -78,7 +78,7 @@ const ClaimCoupon = () => {
           <CouponCard
             key={index}
             index={index}
-            image_src='https://umbrellacreative.com.au/wp-content/uploads/2020/01/hide-the-pain-harold-why-you-should-not-use-stock-photos-1024x683.jpg'
+            image_src='https://ipfs.io/ipfs/QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC'
             coupon_code={bytes2char(hexToUint8Array(contract.coupon_code))}
             description={bytes2char(hexToUint8Array(contract.description))}
             expiration_date={bytes2char(hexToUint8Array(contract.expiration_date))}
