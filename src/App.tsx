@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   // User type (state)
   // Changes depending on current hash of active account
-  const [userType, setUserType] = useState(User.Client)
+  const [userType, setUserType] = useState(User.Admin)
 
   // Wallet Account Replace userType with this
   const [account, setAccount] = useState("");
@@ -70,7 +70,7 @@ const App: React.FC = () => {
 
   // Menu items (state)
   // Changes depending on user type
-  const [menuItems, setMenuItems] = useState(clientMenuItems)
+  const [menuItems, setMenuItems] = useState(adminMenuItems)
   
   // Page (state)
   // Changes depending on selected menu item
