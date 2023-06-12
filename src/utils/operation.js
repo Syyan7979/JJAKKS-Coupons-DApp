@@ -6,7 +6,7 @@ import { getAccount } from "./wallet";
 export const create_couponNFT_contract = async (total_supply, merchant, expiration_date, coupon_code, coupon_id, description, metadata) => {
     try {
         const contract = await tezos.wallet.at("KT1NvfnH4sFEBat8mCC3gTBWi8h4n35JyBic");
-        const op = await contract.methods.default({
+        const op = contract.methods.default({
             total_supply:total_supply,
             merchant:merchant,
             expiration_date:expiration_date,
@@ -14,7 +14,7 @@ export const create_couponNFT_contract = async (total_supply, merchant, expirati
             coupon_id:coupon_id, 
             description:description, 
             metadata:metadata
-        }).send()
+        }).toTransferParams()
         await op.confirmation(1);
     } catch (err) {
         throw err;

@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   // User type (state)
   // Changes depending on current hash of active account
-  const [userType, setUserType] = useState(User.Admin)
+  const [userType, setUserType] = useState(User.NonLoggedin)
 
   // Wallet Account Replace userType with this
   const [account, setAccount] = useState("");
@@ -43,8 +43,16 @@ const App: React.FC = () => {
   const onConnectWallet = async () => {
     // get address of the account
     await connectWallet();
-    const account = await getAccount();
-    setAccount(account);
+    const account_gotten = await getAccount();
+    setAccount(account_gotten);
+    console.log("account: "+ account_gotten);
+    if (account_gotten == "tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn") {
+      setUserType(User.Admin)
+      setMenuItems(adminMenuItems)
+    } else {
+      setUserType(User.Client)
+      setMenuItems(clientMenuItems)
+    }
   };
 
 
@@ -93,7 +101,7 @@ const App: React.FC = () => {
           return (<TrackCoupons />);
       }
     } else{
-        return (<LoginPage/ >);
+        return (<LoginPage onConnectWallet={onConnectWallet}/>);
     }
   };
 

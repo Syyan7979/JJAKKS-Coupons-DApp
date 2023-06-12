@@ -20,6 +20,7 @@ import { nanoid } from 'nanoid'
 import { storage } from '../../utils/firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { create_couponNFT_contract } from '../../utils/operation';
+import { SingleValueType } from 'rc-cascader/lib/Cascader';
 
 
 const { TextArea } = Input;
@@ -29,12 +30,13 @@ const couponId: number = Math.floor((Math.random() * 10000000) + 1);;
 const dateNow: number = Math.floor(Date.now() / 1000);
 
 const CreateCoupon = () => {
-  
-    const [merchant, setMerchant] = useState([""]);
-    const handleMerchant = (value: string[]) => {
+    const casc_list: SingleValueType = ["", ""];
+    
+    const [merchant, setMerchant] = useState(casc_list);
+
+    const handleMerchant = (value: SingleValueType) => {
         // 👇 Get input value from "event"
         setMerchant(value);
-        console.log(merchant);
       };
 
     const [couponCode, setCouponCode] = useState("");
@@ -42,7 +44,6 @@ const CreateCoupon = () => {
         const re = /^[A-Za-z][A-Za-z0-9]*$/;
         if (value === '' || re.test(value)) {
            setCouponCode(value.toUpperCase())
-           console.log("couponCode " + value.toUpperCase());
         }
     }
 
@@ -50,14 +51,12 @@ const CreateCoupon = () => {
     const [couponDesc, setCouponDesc] = useState("");
     const handleCouponDesc = (value: string) => {
         setCouponDesc(value);
-        console.log("couponDesc " + couponDesc);
     }
 
     const [validity, setValidity] = useState(dateNow);
     const handleValidity = (value: Dayjs | null) => {
         if (value != null) {
             setValidity(value.unix());
-            console.log("Validity " + validity.toString());
         }
         
     }
@@ -66,7 +65,6 @@ const CreateCoupon = () => {
     const handleSupply = (value: number | null) => {
         if (value != null) {
             setCouponSupply(value);
-            console.log("couponSupply " + couponSupply);
         }
     }
 
@@ -120,7 +118,15 @@ const CreateCoupon = () => {
               },
             )
 
-            create_couponNFT_contract(couponSupply, char2Bytes(merchant[1]), validity, char2Bytes(couponCode), couponId, char2Bytes(couponDesc), null);
+            console.log("couponSupply: " + couponSupply);
+            console.log("merchant: " + char2Bytes(merchant[1].toString()));
+            console.log("validity: " + new Date().toISOString());
+            console.log("couponCode: " + char2Bytes(couponCode));
+            console.log("couponId: " + couponId);
+            console.log("couponDesc: " + char2Bytes(couponDesc));
+            console.log("metadata: " + {"string": char2Bytes("string")});
+
+            create_couponNFT_contract(couponSupply, "0x" + char2Bytes(merchant[1].toString()), new Date().toISOString(),"0x" + char2Bytes(couponCode), couponId, "0x" + char2Bytes(couponDesc), null);
             
           } else {
             message.error('File not found')
@@ -153,7 +159,7 @@ const CreateCoupon = () => {
                     placeholder="Category / Partner Store"
                     value={merchant}
                     expandTrigger="hover"
-                    onChange={handleMerchant}
+                    onChange={(value) => handleMerchant(value)}
                     options={[
                         {
                             value: 'restaurant',

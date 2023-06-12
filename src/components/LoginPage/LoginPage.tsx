@@ -3,7 +3,7 @@ import { connectWallet, getAccount } from "../../utils/wallet";
 import './styles.css'
 import { Space } from 'antd';
 
-const LoginPage = () => {
+const LoginPage = ({onConnectWallet}: any) => {
     const [account, setAccount] = useState("");
 
     useEffect(() => {
@@ -14,13 +14,21 @@ const LoginPage = () => {
         })();
       }, []);
 
-       // Connect Wallet
-        const onConnectWallet = async () => {
-            // get address of the account
-            await connectWallet();
-            const account = await getAccount();
-            setAccount(account);
-        };
+    //    // Connect Wallet
+    //     const onConnectWallet = async () => {
+    //         // get address of the account
+    //         await connectWallet();
+    //         const account_gotten = await getAccount();
+    //         setAccount(account_gotten);
+    //         console.log("account: "+ account_gotten);
+    //         if (account == "tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn") {
+    //           setUserType(User.Admin)
+    //           setMenuItems(adminMenuItems)
+    //         } else {
+    //           setUserType(User.Client)
+    //           setMenuItems(clientMenuItems)
+    //         }
+    //     };
 
     return(
         <div className='claim-coupon flex-wrap'>
