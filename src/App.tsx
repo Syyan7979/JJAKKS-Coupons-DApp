@@ -34,6 +34,12 @@ const App: React.FC = () => {
         const getActiveAccount = async () => {
             const account = await getAccount();
             setAccount(account);
+
+            if (account === 'tz1hR44gwZNVWGJFUQiRJdedvCmAdPUHgkBC') {
+                setUserType(User.Admin);
+            } else {
+                setUserType(User.Client);
+            }
         };
         getActiveAccount();
     });
