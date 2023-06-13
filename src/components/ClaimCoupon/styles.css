@@ -1,4 +1,4 @@
-.claim-page-title{
+.claim-page-title {
     font-size: 3em;
 }
 
@@ -9,36 +9,35 @@
     justify-content: center;
 }
 
-.cpn-coupon_code{
+.cpn-coupon_code {
     color: black;
     font-size: 1.5em;
     font-weight: 700;
     padding: 0;
 }
 
-.cpn-merchant{
+.cpn-merchant {
     color: #bbb;
     display: inline;
     margin-right: 0.5em;
 }
 
-.cpn-valid-until{
+.cpn-valid-until {
     color: #bbb;
     display: inline;
     margin-left: 0.5em;
 }
 
-.cpn-description{
+.cpn-description {
     color: #000;
 }
 
 hr.solid {
     border-top: 3px solid #bbb;
-  }
+}
 
 .hor-line {
-    content: "\00B7";
+    content: '\00B7';
     font-size: 2em;
     color: #bbb;
 }
-
