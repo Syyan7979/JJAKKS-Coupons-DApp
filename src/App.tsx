@@ -35,14 +35,16 @@ const App: React.FC = () => {
             const account = await getAccount();
             setAccount(account);
 
-            if (account === 'tz1hR44gwZNVWGJFUQiRJdedvCmAdPUHgkBC') {
+            if (account === 'tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn') {
                 setUserType(User.Admin);
+                setMenuItems(adminMenuItems);
             } else {
                 setUserType(User.Client);
+                setMenuItems(clientMenuItems)
             }
         };
         getActiveAccount();
-    });
+    }, []);
 
     // Connect Wallet
     const onConnectWallet = async () => {
@@ -51,7 +53,7 @@ const App: React.FC = () => {
         const account_gotten = await getAccount();
         setAccount(account_gotten);
         console.log('account: ' + account_gotten);
-        if (account_gotten == 'tz1hR44gwZNVWGJFUQiRJdedvCmAdPUHgkBC') {
+        if (account_gotten == 'tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn') {
             setUserType(User.Admin);
             setMenuItems(adminMenuItems);
         } else {

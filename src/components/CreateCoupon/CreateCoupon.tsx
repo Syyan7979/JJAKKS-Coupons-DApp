@@ -13,6 +13,8 @@ import { storage } from '../../utils/firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { create_couponNFT_contract } from '../../utils/operation';
 import { SingleValueType } from 'rc-cascader/lib/Cascader';
+import CouponCard from '../ClaimCoupon/CouponCard';
+
 
 const { TextArea } = Input;
 
@@ -58,18 +60,25 @@ const CreateCoupon = () => {
 
     const [imageFile, setImageFile] = useState<File>();
     const [downloadURL, setDownloadURL] = useState('');
+    const [displayURL, setDisplayURL] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [progressUpload, setProgressUpload] = useState(0);
 
     const handleSelectedFile = (files: any) => {
         if (files && files[0].size < 10000000) {
             setImageFile(files[0]);
-
             console.log(files[0]);
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(files[0]); 
+            fileReader.onload = function (){
+                if (fileReader.result != null)
+                setDisplayURL(fileReader.result.toString())
+            }
         } else {
             message.error('File size too large.');
         }
     };
+
 
     const handleSubmit = async () => {
         setIsUploading(true);
@@ -101,27 +110,30 @@ const CreateCoupon = () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(url => {
                         //url is download url of file
                         setDownloadURL(url);
+
+                        console.log('couponSupply: ' + couponSupply);
+                        console.log('merchant: ' + char2Bytes(merchant[1].toString()));
+                        console.log('validity: ' + dayjs.unix(validity));
+                        console.log('couponCode: ' + char2Bytes(couponCode));
+                        console.log('couponId: ' + couponId);
+                        console.log('couponDesc: ' + char2Bytes(couponDesc));
+                        console.log('metadata: ' + url);
+            
+                        create_couponNFT_contract(
+                            couponSupply,
+                            merchant[1].toString(),
+                            validity,
+                            couponCode,
+                            couponId,
+                            couponDesc,
+                            url,
+                            {}
+                        );
                     });
                 }
             );
 
-            console.log('couponSupply: ' + couponSupply);
-            console.log('merchant: ' + char2Bytes(merchant[1].toString()));
-            console.log('validity: ' + new Date().toISOString());
-            console.log('couponCode: ' + char2Bytes(couponCode));
-            console.log('couponId: ' + couponId);
-            console.log('couponDesc: ' + char2Bytes(couponDesc));
-            console.log('metadata: ' + { string: char2Bytes('string') });
 
-            create_couponNFT_contract(
-                couponSupply,
-                merchant[1].toString(),
-                new Date().toISOString(),
-                couponCode,
-                couponId,
-                couponDesc,
-                downloadURL
-            );
         } else {
             message.error('File not found');
         }
@@ -155,23 +167,23 @@ const CreateCoupon = () => {
                                 label: 'Restaurant',
                                 children: [
                                     {
-                                        value: 'burgerbyte',
+                                        value: 'Burgerbyte',
                                         label: 'Burgerbyte',
                                     },
                                     {
-                                        value: 'eatsy',
+                                        value: 'Eatsy',
                                         label: 'Eatsy',
                                     },
                                     {
-                                        value: 'grill-galaxy',
+                                        value: 'Grill Galaxy',
                                         label: 'Grill Galaxy',
                                     },
                                     {
-                                        value: 'loco-cafe',
+                                        value: 'Loco Cafe',
                                         label: 'Loco Cafe',
                                     },
                                     {
-                                        value: 'snack-haven',
+                                        value: 'Snack Haven',
                                         label: 'Snack Haven',
                                     },
                                 ],
@@ -181,27 +193,27 @@ const CreateCoupon = () => {
                                 label: 'Fashion',
                                 children: [
                                     {
-                                        value: 'chictique',
+                                        value: 'Chictique',
                                         label: 'Chictique',
                                     },
                                     {
-                                        value: 'choice',
+                                        value: 'Choice',
                                         label: 'Choice',
                                     },
                                     {
-                                        value: 'dress-domain',
+                                        value: 'Dress Domain',
                                         label: 'Dress Domain',
                                     },
                                     {
-                                        value: 'glamour-galleria',
+                                        value: 'Glamour Galleria',
                                         label: 'Glamour Galleria',
                                     },
                                     {
-                                        value: 'urban-soul',
+                                        value: 'Urban Soul',
                                         label: 'Urban Soul',
                                     },
                                     {
-                                        value: 'wearista',
+                                        value: 'Wearista',
                                         label: 'Wearista',
                                     },
                                 ],
@@ -211,44 +223,44 @@ const CreateCoupon = () => {
                                 label: 'Electronics',
                                 children: [
                                     {
-                                        value: 'applix',
+                                        value: 'Applix',
                                         label: 'Applix',
                                     },
                                     {
-                                        value: 'furvio',
+                                        value: 'Furvio',
                                         label: 'Furvio',
                                     },
                                     {
-                                        value: 'gadget-gateway',
+                                        value: 'Gadget Gateway',
                                         label: 'Gadget Gateway',
                                     },
                                     {
-                                        value: 'gadget-genius',
+                                        value: 'Gadget Genius',
                                         label: 'Gadget Genius',
                                     },
 
                                     {
-                                        value: 'zees',
+                                        value: 'Zees',
                                         label: 'Zees',
                                     },
                                     {
-                                        value: 'powermate',
+                                        value: 'Powermate',
                                         label: 'Powermate',
                                     },
                                     {
-                                        value: 'laplabz',
+                                        value: 'Laplabz',
                                         label: 'Laplabz',
                                     },
                                     {
-                                        value: 'nimbus',
+                                        value: 'Nimbus',
                                         label: 'Nimbus',
                                     },
                                     {
-                                        value: 'tech-haus',
+                                        value: 'Tech Haus',
                                         label: 'Tech Haus',
                                     },
                                     {
-                                        value: 'techcite',
+                                        value: 'Techcite',
                                         label: 'Techcite',
                                     },
                                 ],
@@ -258,31 +270,31 @@ const CreateCoupon = () => {
                                 label: 'Personal Care',
                                 children: [
                                     {
-                                        value: 'barber-box',
+                                        value: 'Barber Box',
                                         label: 'Barber Box',
                                     },
                                     {
-                                        value: 'bliss-booth',
+                                        value: 'Bliss Booth',
                                         label: 'Bliss Booth',
                                     },
                                     {
-                                        value: 'elite-salon-spa',
+                                        value: 'Elite Salon Spa',
                                         label: 'Elite Salon Spa',
                                     },
                                     {
-                                        value: 'graceful-nails',
+                                        value: 'Graceful Nails',
                                         label: 'Graceful Nails',
                                     },
                                     {
-                                        value: 'polished-plus',
+                                        value: 'Polished Plus',
                                         label: 'Polished+',
                                     },
                                     {
-                                        value: 'the-cut-crafters',
+                                        value: 'The Cut Crafters',
                                         label: 'The Cut Crafters',
                                     },
                                     {
-                                        value: 'urbanmane',
+                                        value: 'Urbanmane',
                                         label: 'Urbanmane',
                                     },
                                 ],
@@ -322,9 +334,22 @@ const CreateCoupon = () => {
 
                 <Form.Item label="Coupon Image">
                     <Input
+                        className='image-input'
                         type="file"
                         onChange={files => handleSelectedFile(files.target.files)}
                     ></Input>
+                </Form.Item>
+                
+                <Form.Item label="Coupon Preview">
+                    <CouponCard 
+                        key={0}
+                        index={0}
+                        image_src={displayURL}
+                        coupon_code={couponCode}
+                        description={couponDesc}
+                        expiration_date={dayjs.unix(validity).format("MMM DD, YYYY")}
+                        merchant={merchant[1].toString()}
+                    />
                 </Form.Item>
 
                 <Form.Item>

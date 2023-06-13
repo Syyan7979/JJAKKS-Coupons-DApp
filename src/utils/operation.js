@@ -11,6 +11,7 @@ export const create_couponNFT_contract = async (
     coupon_code,
     coupon_id,
     description,
+    image_url,
     metadata
 ) => {
     try {
@@ -18,7 +19,8 @@ export const create_couponNFT_contract = async (
         merchant = bytesOfString(merchant);
         coupon_code = bytesOfString(coupon_code);
         description = bytesOfString(description);
-        const contract = await tezos.wallet.at('KT1NP2tyUj3w6Mk1LeYSt6eLUr5wRAbNZ9s6');
+        image_url = bytesOfString(image_url);
+        const contract = await tezos.wallet.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
         const op = await contract.methodsObject
             .default({
                 total_supply: total_supply,
@@ -27,6 +29,7 @@ export const create_couponNFT_contract = async (
                 coupon_code: coupon_code,
                 coupon_id: coupon_id,
                 description: description,
+                image_url: image_url,
                 metadata: metadata,
             })
             .send();
@@ -39,7 +42,7 @@ export const create_couponNFT_contract = async (
 // TO DO: Get contract addr from admin contract bigmap
 
 // Coupon Contract Entrypoints
-// contract_addr is found at storage > bigmap of KT1NvfnH4sFEBat8mCC3gTBWi8h4n35JyBic
+// contract_addr is found at storage > bigmap of KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr
 export async function burn(contract_addr) {
     try {
         const contract = await tezos.wallet.at(contract_addr);
@@ -100,7 +103,7 @@ export async function transfer(contract_addr, to_addr) {
 // Access bigmap
 export async function access_contract(index) {
     try {
-        const mainContract = await tezos.contract.at('KT1NvfnH4sFEBat8mCC3gTBWi8h4n35JyBic');
+        const mainContract = await tezos.contract.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
         const mainStorage = await mainContract.storage();
         const nftContractAddress = await mainStorage['couponsNFTContracts']
             .get(index)
@@ -119,7 +122,7 @@ export async function access_contract(index) {
 
 export async function access_contract_adress(index) {
     try {
-        const mainContract = await tezos.wallet.at('KT1NvfnH4sFEBat8mCC3gTBWi8h4n35JyBic');
+        const mainContract = await tezos.wallet.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
         const mainStorage = await mainContract.storage();
         const nftContractAddress = await mainStorage['couponsNFTContracts']
             .get(index)
@@ -138,7 +141,7 @@ export async function access_contract_adress(index) {
 // Access bigmap
 export async function contract_count() {
     try {
-        const contract = await tezos.contract.at('KT1NvfnH4sFEBat8mCC3gTBWi8h4n35JyBic');
+        const contract = await tezos.contract.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
         const storage = await contract.storage();
         const contractCount = storage['couponsNFTContractsCount'];
 

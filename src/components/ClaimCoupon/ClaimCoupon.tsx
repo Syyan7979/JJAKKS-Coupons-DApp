@@ -3,6 +3,7 @@ import CouponCard from './CouponCard';
 import './styles.css';
 import { access_contract, contract_count } from '../../utils/operation';
 import { fetchStorage } from '../../utils/tzkt';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface NFTContractType {
     ledger: number;
@@ -17,7 +18,8 @@ interface NFTContractType {
     administrator: string;
     last_token_id: string;
     token_metadata: number;
-    expiration_date: string;
+    expiration_date: number;
+    image_url: string;
 }
 
 const ClaimCoupon = () => {
@@ -77,10 +79,10 @@ const ClaimCoupon = () => {
                     <CouponCard
                         key={index}
                         index={index}
-                        image_src="https://ipfs.io/ipfs/QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC"
+                        image_src={bytes2char(hexToUint8Array(contract.image_url))}
                         coupon_code={bytes2char(hexToUint8Array(contract.coupon_code))}
                         description={bytes2char(hexToUint8Array(contract.description))}
-                        expiration_date={bytes2char(hexToUint8Array(contract.expiration_date))}
+                        expiration_date={dayjs.unix(contract.expiration_date).format("MMM DD, YYYY")}
                         merchant={bytes2char(hexToUint8Array(contract.merchant))}
                     />
                 ))

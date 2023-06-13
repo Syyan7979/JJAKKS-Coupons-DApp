@@ -43,6 +43,7 @@ class CouponsNFT(
             coupon_code=coupon_code,
             coupon_id=coupon_id,
             description=description,
+            image_url=metadata,
             claimants=sp.map(l={}, tkey=sp.TAddress, tvalue=sp.TNat),
         )
 
