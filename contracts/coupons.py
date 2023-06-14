@@ -94,7 +94,6 @@ class CouponsFactory(sp.Contract):
         self.init(
             admin=admin,
             couponsNFTContracts=sp.big_map(tkey=sp.TNat, tvalue=sp.TAddress),
-            couponsNFTContractsCount=0,
         )
 
     @sp.entry_point
@@ -123,10 +122,7 @@ class CouponsFactory(sp.Contract):
 
         deployedContract = sp.create_contract(contract=couponsNFTContract)
 
-        self.data.couponsNFTContracts[
-            self.data.couponsNFTContractsCount
-        ] = deployedContract
-        self.data.couponsNFTContractsCount += 1
+        self.data.couponsNFTContracts[coupon_code] = deployedContract
 
 
 @sp.add_test(name="test nft")
