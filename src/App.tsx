@@ -34,8 +34,9 @@ const App: React.FC = () => {
         const getActiveAccount = async () => {
             const account = await getAccount();
             setAccount(account);
-
-            if (account === 'tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn') {
+            if (account =="") {
+                setUserType(User.NonLoggedin);
+            } else if (account === 'tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn') {
                 setUserType(User.Admin);
                 setMenuItems(adminMenuItems);
             } else {
