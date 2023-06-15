@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Spin, message } from 'antd';
+import { Popconfirm, Spin, message } from 'antd';
 
 import { char2Bytes } from '@taquito/utils';
 import { Button, Cascader, DatePicker, Form, Input, InputNumber } from 'antd';
@@ -21,7 +21,7 @@ const { TextArea } = Input;
 const couponId: number = Math.floor(Math.random() * 10000000 + 1);
 const dateNow: number = Math.floor(Date.now() / 1000);
 
-const CreateCoupon = () => {
+const CreateCoupons = () => {
     const casc_list: SingleValueType = ['', ''];
 
     const [merchant, setMerchant] = useState(casc_list);
@@ -86,63 +86,61 @@ const CreateCoupon = () => {
             const name = imageFile.name;
             const storageRef = ref(storage, `image/${name + nanoid(8)}`);
             const uploadTask = uploadBytesResumable(storageRef, imageFile);
-
-            uploadTask.on(
-                'state_changed',
-                snapshot => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-                    setProgressUpload(progress); // to show progress upload
-
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                    }
-                },
-                error => {
-                    message.error(error.message);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                        //url is download url of file
-                        setDownloadURL(url);
-
-                        console.log('couponSupply: ' + couponSupply);
-                        console.log('merchant: ' + char2Bytes(merchant[1].toString()));
-                        console.log('validity: ' + dayjs.unix(validity));
-                        console.log('couponCode: ' + char2Bytes(couponCode));
-                        console.log('couponId: ' + couponId);
-                        console.log('couponDesc: ' + char2Bytes(couponDesc));
-                        console.log('metadata: ' + url);
             
-                        create_couponNFT_contract(
-                            couponSupply,
-                            merchant[1].toString(),
-                            validity,
-                            couponCode,
-                            couponId,
-                            couponDesc,
-                            url,
-                            {}
-                        );
-                    });
-                }
-            );
+            await uploadTask;
+            
+            const download = getDownloadURL(uploadTask.snapshot.ref).then(url => {
+                //url is download url of file
+                setDownloadURL(url);
 
+                console.log('couponSupply: ' + couponSupply);
+                console.log('merchant: ' + char2Bytes(merchant[1].toString()));
+                console.log('validity: ' + dayjs.unix(validity));
+                console.log('couponCode: ' + char2Bytes(couponCode));
+                console.log('couponId: ' + couponId);
+                console.log('couponDesc: ' + char2Bytes(couponDesc));
+                console.log('metadata: ' + url);
+    
+                create_couponNFT_contract(
+                    couponSupply,
+                    merchant[1].toString(),
+                    validity,
+                    couponCode,
+                    couponId,
+                    couponDesc,
+                    url,
+                    {}
+                );
+            });
+
+            await download;
+
+            setIsUploading(false);
+            setOpen(false);
 
         } else {
             message.error('File not found');
+            setIsUploading(false);
+            setOpen(false);
         }
-        setIsUploading(false);
+        
+    };
+
+    const [open, setOpen] = useState(false);
+  
+    const showPopconfirm = () => {
+      setOpen(true);
+    };
+  
+  
+    const handleCancel = () => {
+      console.log('Clicked cancel button');
+      setOpen(false);
     };
 
     return (
-        <div className="create-coupon">
-            <h1> CREATE COUPON </h1>
+        <div className="create-coupons">
+            <h1> CREATE COUPONS </h1>
 
             <br />
             <br />
@@ -349,24 +347,29 @@ const CreateCoupon = () => {
                         description={couponDesc}
                         expiration_date={dayjs.unix(validity).format("MMM DD, YYYY")}
                         merchant={merchant[1].toString()}
+                        disable={true}
                     />
                 </Form.Item>
 
-                <Form.Item>
-                    <Button
-                        onClick={handleSubmit}
-                        type="primary"
-                        htmlType="submit"
-                        disabled={isUploading}
-                        block
+                <Form.Item className='submit'>
+                    <Popconfirm
+                        title="Confirm Coupons Creation"
+                        description="Click OK to proceed with the creation of NFT coupons."
+                        open={open}
+                        onConfirm={handleSubmit}
+                        okButtonProps={{ loading: isUploading }}
+                        onCancel={handleCancel}
                     >
-                        {' '}
-                        {isUploading ? <Spin /> : 'Create Coupon'}
-                    </Button>
+                        <Button type="primary" onClick={showPopconfirm}>
+                            Create Coupons
+                        </Button>
+                    </Popconfirm>
+    
                 </Form.Item>
+
             </Form>
         </div>
     );
 };
 
-export default CreateCoupon;
+export default CreateCoupons;

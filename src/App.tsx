@@ -5,8 +5,8 @@ import { Layout, Menu, theme } from 'antd';
 
 // Custom components
 import ClaimCoupon from './components/ClaimCoupon/ClaimCoupon';
-import CreateCoupon from './components/CreateCoupon/CreateCoupon';
-import TrackCoupons from './components/TrackCoupons/TrackCoupons';
+import CreateCoupons from './components/CreateCoupons/CreateCoupons';
+import ViewCoupons from './components/ViewCoupons/ViewCoupons';
 import LoginPage from './components/LoginPage/LoginPage';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -66,11 +66,11 @@ const App: React.FC = () => {
     const adminMenuItems = [
         {
             key: 'create',
-            label: 'Create Coupon',
+            label: 'Create Coupons',
         },
         {
-            key: 'track',
-            label: 'Track Coupons',
+            key: 'view',
+            label: 'View Coupons',
         },
     ];
 
@@ -101,9 +101,9 @@ const App: React.FC = () => {
         } else if (userType === User.Admin) {
             switch (page) {
                 case 'create':
-                    return <CreateCoupon />;
-                case 'track':
-                    return <TrackCoupons />;
+                    return <CreateCoupons />;
+                case 'view':
+                    return <ViewCoupons />;
             }
         } else {
             return <LoginPage onConnectWallet={onConnectWallet} />;

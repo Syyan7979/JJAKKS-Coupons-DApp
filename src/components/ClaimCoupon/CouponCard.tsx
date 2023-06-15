@@ -4,6 +4,7 @@ import { Avatar, Card } from 'antd';
 import { claim_coupon, access_contract_adress } from '../../utils/operation';
 
 import './styles.css';
+import { color } from '@chakra-ui/react';
 const { Meta } = Card;
 
 const CouponCard = ({
@@ -13,6 +14,7 @@ const CouponCard = ({
     description,
     merchant,
     expiration_date,
+    disable,
 }: {
     index: number;
     image_src: string;
@@ -20,6 +22,7 @@ const CouponCard = ({
     description: string;
     merchant: string;
     expiration_date: string;
+    disable: boolean;
 }) => {
     const handleClaimCoupon = async () => {
         try {
@@ -40,8 +43,8 @@ const CouponCard = ({
         <Card
             style={{ width: 300, margin: '10px' }}
             cover={<img alt="example" src={image_src} />}
-            actions={[
-                <PlusCircleOutlined key="claim" rev={undefined} onClick={handleClaimCoupon} />, // Add onClick handler to the PlusCircleOutlined icon
+            actions={disable? []:[
+                <PlusCircleOutlined key="claim" rev={undefined} onClick={handleClaimCoupon } />, // Add onClick handler to the PlusCircleOutlined icon
                 // <EllipsisOutlined key="details" rev={undefined} label='See Details' />,
             ]}
         >

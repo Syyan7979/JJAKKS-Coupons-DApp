@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import CouponCard from './CouponCard';
+import { useState, useEffect } from 'react';
 import './styles.css';
+import CouponCard from '../ClaimCoupon/CouponCard';
 import { access_contract, contract_count } from '../../utils/operation';
 import { fetchStorage } from '../../utils/tzkt';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 interface NFTContractType {
     ledger: number;
@@ -22,7 +22,7 @@ interface NFTContractType {
     image_url: string;
 }
 
-const ClaimCoupon = () => {
+const ViewCoupons = () => {
     const [NFTContracts, setNFTContracts] = useState<NFTContractType[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -67,11 +67,7 @@ const ClaimCoupon = () => {
     };
 
     return (
-        <div className="claim-coupon flex-wrap">
-            <div style={{ width: '100%' }}>
-                <h1 className="claim-page-title">CLAIM COUPONS</h1>
-            </div>
-
+        <div className="view-coupons flex-wrap">
             {NFTContracts.length === 0 ? (
                 <div>No coupons available</div>
             ) : (
@@ -84,7 +80,7 @@ const ClaimCoupon = () => {
                         description={bytes2char(hexToUint8Array(contract.description))}
                         expiration_date={dayjs.unix(contract.expiration_date).format("MMM DD, YYYY")}
                         merchant={bytes2char(hexToUint8Array(contract.merchant))}
-                        disable={false}
+                        disable={true}
                     />
                 ))
             )}
@@ -92,4 +88,4 @@ const ClaimCoupon = () => {
     );
 };
 
-export default ClaimCoupon;
+export default ViewCoupons;
