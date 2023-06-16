@@ -20,6 +20,7 @@ class CouponsNFT(
         coupon_code,
         coupon_id,
         description,
+        image_url,
         admin,
         metadata,
         token_metadata={},
@@ -43,7 +44,7 @@ class CouponsNFT(
             coupon_code=coupon_code,
             coupon_id=coupon_id,
             description=description,
-            image_url=metadata,
+            image_url=image_url,
             claimants=sp.map(l={}, tkey=sp.TAddress, tvalue=sp.TNat),
         )
 
@@ -106,6 +107,7 @@ class CouponsFactory(sp.Contract):
         coupon_id,
         description,
         metadata,
+        image_url,
     ):
         sp.verify(sp.sender == self.data.admin, "NOT ADMIN")
 
@@ -118,6 +120,7 @@ class CouponsFactory(sp.Contract):
             description=description,
             admin=self.data.admin,
             metadata=metadata,
+            image_url = image_url,
         )
 
         deployedContract = sp.create_contract(contract=couponsNFTContract)
