@@ -1,7 +1,7 @@
 import React from 'react';
-import { PlusCircleOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
-import { claim_coupon, access_contract_adress } from '../../utils/operation';
+import { claim_coupon, access_contract_adress,burn } from '../../utils/operation';
 
 import './styles.css';
 import { color } from '@chakra-ui/react';
@@ -39,12 +39,30 @@ const CouponCard = ({
         }
     };
 
+    const HandleBurningCoupon = async () => {
+        try {
+            const contractAddress = await access_contract_adress(index); // Get the contract address using the provided function and the index prop
+            console.log('Contract Address:', contractAddress); // Add this console log to check the contract address
+
+            if (!contractAddress) {
+                throw new Error('Contract address not found');
+            }
+
+            await burn(contractAddress); // Call the claim_coupon function to claim the coupon
+        } catch (error) {
+            console.error('Error burning coupon:', error);
+        }
+    };
+
+
+    
     return (
         <Card
             style={{ width: 300, margin: '10px' }}
             cover={<img alt="example" src={image_src} />}
             actions={disable? []:[
                 <PlusCircleOutlined key="claim" rev={undefined} onClick={handleClaimCoupon } />, // Add onClick handler to the PlusCircleOutlined icon
+                <DeleteOutlined key="burn" rev={undefined} onClick={HandleBurningCoupon } />, // 
                 // <EllipsisOutlined key="details" rev={undefined} label='See Details' />,
             ]}
         >
