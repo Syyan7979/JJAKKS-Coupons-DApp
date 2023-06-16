@@ -14,13 +14,14 @@ export const create_couponNFT_contract = async (
     image_url,
     metadata
 ) => {
+    console.log(expiration_date);
     try {
         metadata = fetchMetadataFromURL(metadata);
         merchant = bytesOfString(merchant);
         coupon_code = bytesOfString(coupon_code);
         description = bytesOfString(description);
         image_url = bytesOfString(image_url);
-        const contract = await tezos.wallet.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
+        const contract = await tezos.wallet.at('KT1QD2DLAnogGtew4VnoaTWVXqz45MzAovvT');
         const op = await contract.methodsObject
             .default({
                 total_supply: total_supply,
@@ -103,7 +104,7 @@ export async function transfer(contract_addr, to_addr) {
 // Access bigmap
 export async function access_contract(index) {
     try {
-        const mainContract = await tezos.contract.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
+        const mainContract = await tezos.contract.at('KT1QD2DLAnogGtew4VnoaTWVXqz45MzAovvT');
         const mainStorage = await mainContract.storage();
         const nftContractAddress = await mainStorage['couponsNFTContracts']
             .get(index)
@@ -122,7 +123,7 @@ export async function access_contract(index) {
 
 export async function access_contract_adress(index) {
     try {
-        const mainContract = await tezos.wallet.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
+        const mainContract = await tezos.wallet.at('KT1QD2DLAnogGtew4VnoaTWVXqz45MzAovvT');
         const mainStorage = await mainContract.storage();
         const nftContractAddress = await mainStorage['couponsNFTContracts']
             .get(index)
@@ -141,7 +142,7 @@ export async function access_contract_adress(index) {
 // Access bigmap
 export async function contract_count() {
     try {
-        const contract = await tezos.contract.at('KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr');
+        const contract = await tezos.contract.at('KT1QD2DLAnogGtew4VnoaTWVXqz45MzAovvT');
         const storage = await contract.storage();
         const contractCount = storage['couponsNFTContractsCount'];
 

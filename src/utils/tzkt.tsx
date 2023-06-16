@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchStorage = async () => {
     const res = await axios.get(
-        'https://api.ghostnet.tzkt.io/v1/contracts/KT1RcabdvJycN32Gb2SW78fzdoggxTCBVPEr/storage'
+        'https://api.ghostnet.tzkt.io/v1/contracts/KT1QD2DLAnogGtew4VnoaTWVXqz45MzAovvT/storage'
     );
 
     return res.data;

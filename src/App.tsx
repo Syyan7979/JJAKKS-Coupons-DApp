@@ -36,7 +36,7 @@ const App: React.FC = () => {
             setAccount(account);
             if (account =="") {
                 setUserType(User.NonLoggedin);
-            } else if (account === 'tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn') {
+            } else if (account === 'tz1WUKjXiGKguuYAvB1NnmGdYt89sSdi9gzv') {
                 setUserType(User.Admin);
                 setMenuItems(adminMenuItems);
             } else {
@@ -54,7 +54,7 @@ const App: React.FC = () => {
         const account_gotten = await getAccount();
         setAccount(account_gotten);
         console.log('account: ' + account_gotten);
-        if (account_gotten == 'tz1Wtfp36q2WDq2YmHUDkGNaMEdUM6aJHaRn') {
+        if (account_gotten == 'tz1WUKjXiGKguuYAvB1NnmGdYt89sSdi9gzv') {
             setUserType(User.Admin);
             setMenuItems(adminMenuItems);
         } else {

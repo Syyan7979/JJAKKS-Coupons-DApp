@@ -40,7 +40,7 @@ class CouponsNFT(
         self.update_initial_storage(
             total_supply=total_supply,
             merchant=merchant,
-            expiration_date=sp.pack(expiration_date),
+            expiration_date=expiration_date,
             coupon_code=coupon_code,
             coupon_id=coupon_id,
             description=description,
@@ -81,7 +81,6 @@ class CouponsNFT(
                     "coupon_code": self.data.coupon_code,
                     "merchant": self.data.merchant,
                     "description": self.data.description,
-                    "expiration_date": self.data.expiration_date,
                 }
             ),
         )
@@ -95,6 +94,7 @@ class CouponsFactory(sp.Contract):
         self.init(
             admin=admin,
             couponsNFTContracts=sp.big_map(tkey=sp.TNat, tvalue=sp.TAddress),
+            couponsNFTContractsCount=0,
         )
 
     @sp.entry_point
@@ -125,7 +125,8 @@ class CouponsFactory(sp.Contract):
 
         deployedContract = sp.create_contract(contract=couponsNFTContract)
 
-        self.data.couponsNFTContracts[coupon_code] = deployedContract
+        self.data.couponsNFTContracts[self.data.couponsNFTContractsCount] = deployedContract
+        self.data.couponsNFTContractsCount += 1
 
 
 @sp.add_test(name="test nft")
@@ -145,18 +146,20 @@ def test():
     couponsFactory.create_couponNFT_contract(
         total_supply=2,
         merchant=sp.utils.bytes_of_string("Amazon"),
-        expiration_date=sp.timestamp(1234567890),
+        expiration_date=1234567890,
         coupon_code=sp.utils.bytes_of_string("AMAZON10"),
         coupon_id=1,
         description=sp.utils.bytes_of_string("10% OFF FOR AMAZON"),
         metadata=sp.utils.metadata_of_url("http://www.example.com"),
+        image_url=sp.utils.bytes_of_string("ipfs://QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC"),
     ).run(sender=admin)
     couponsFactory.create_couponNFT_contract(
         total_supply=10,
         merchant=sp.utils.bytes_of_string("Lazada"),
-        expiration_date=sp.timestamp(1235556680),
+        expiration_date=1235556680,
         coupon_code=sp.utils.bytes_of_string("LAZADA20"),
         coupon_id=1,
         description=sp.utils.bytes_of_string("20% Off LAZADA"),
         metadata=sp.utils.metadata_of_url("http://www.example.com"),
+        image_url=sp.utils.bytes_of_string("ipfs://QmYQUQjKXLgXzmX1ZEy6TpHG9xSUffiJHWEGSyRkDEBYNC"),
     ).run(sender=admin)
