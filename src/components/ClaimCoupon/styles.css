@@ -69,7 +69,7 @@ input:not(:placeholder-shown) {
 }
 
 
-
+/* 
 label {
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
@@ -78,7 +78,7 @@ label {
   height: 1px;
   width: 1px;
   overflow: hidden;
-}
+} */
 
 .result {
     width: 100%;

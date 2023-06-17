@@ -76,6 +76,7 @@ const CouponCard = ({
             style={{ width: 300, margin: '10px' }}
             cover={<img alt="example" src={image_src} />}
             actions={
+                disable? []:
                 claimed
                     ? [<DeleteOutlined key="burn" rev={undefined} onClick={handleBurningCoupon} />]
                     : [
