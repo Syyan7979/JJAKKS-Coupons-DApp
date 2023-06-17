@@ -109,28 +109,30 @@ const ClaimCoupon = () => {
         </button>
       </div>
 
-      {showCards && searchTerm.trim() !== '' && (
+      {showCards && searchTerm.trim() !== '' && filteredContracts.length > 0 ? (
+        <div className="result">
+          {filteredContracts.map((contract, index) => (
+            <CouponCard
+              key={index}
+              index={index}
+              image_src={bytes2char(hexToUint8Array(contract.image_url))}
+              coupon_code={bytes2char(hexToUint8Array(contract.coupon_code))}
+              description={bytes2char(hexToUint8Array(contract.description))}
+              expiration_date={dayjs
+                .unix(contract.expiration_date)
+                .format('MMM DD, YYYY')}
+              merchant={bytes2char(hexToUint8Array(contract.merchant))}
+              disable={false}
+            />
+          ))}
+        </div>
+      ) : (
         <div className="result">
           {NFTContracts.length === 0 ? (
             <div>No coupons available</div>
-          ) : filteredContracts.length === 0 ? (
+          ) : filteredContracts.length === 0 && showCards ? (
             <div>Coupon code not existing</div>
-          ) : (
-            filteredContracts.map((contract, index) => (
-              <CouponCard
-                key={index}
-                index={index}
-                image_src={bytes2char(hexToUint8Array(contract.image_url))}
-                coupon_code={bytes2char(hexToUint8Array(contract.coupon_code))}
-                description={bytes2char(hexToUint8Array(contract.description))}
-                expiration_date={dayjs
-                  .unix(contract.expiration_date)
-                  .format('MMM DD, YYYY')}
-                merchant={bytes2char(hexToUint8Array(contract.merchant))}
-                disable={false}
-              />
-            ))
-          )}
+          ) : null}
         </div>
       )}
     </div>
