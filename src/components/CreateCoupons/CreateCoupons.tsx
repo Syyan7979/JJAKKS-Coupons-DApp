@@ -18,7 +18,7 @@ import CouponCard from '../ClaimCoupon/CouponCard';
 
 const { TextArea } = Input;
 
-const couponId: number = Math.floor(Math.random() * 10000000 + 1);
+let couponId = Math.floor(Math.random() * 10000000 + 1);
 const dateNow: number = Math.floor(Date.now() / 1000);
 
 const CreateCoupons = () => {
@@ -114,6 +114,8 @@ const CreateCoupons = () => {
             });
 
             await download;
+
+            couponId = Math.floor(Math.random() * 10000000 + 1);
 
             setIsUploading(false);
             setOpen(false);
