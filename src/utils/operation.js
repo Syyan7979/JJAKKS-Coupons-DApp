@@ -145,9 +145,31 @@ export async function contract_count() {
         const contract = await tezos.contract.at('KT1QD2DLAnogGtew4VnoaTWVXqz45MzAovvT');
         const storage = await contract.storage();
         const contractCount = storage['couponsNFTContractsCount'];
-
+		
         console.log(`The contract count is ${contractCount}.`);
         return contractCount;
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Access claimants
+export async function check_if_claimed(index) {
+	try {
+		const acc = await getAccount();
+        const contract = await access_contract_adress(index);
+		const NFTcontract = await tezos.contract.at(contract);
+        const contractStorage = await NFTcontract.storage();
+		
+        const contractClaimants = await contractStorage['claimants']
+			.get(`${acc}`)
+		if (!contractClaimants || contractClaimants === 'undefined') {
+            console.log(`The contract count is ${contractClaimants}.`);
+			return false;
+        } else {
+			console.log(`The contract count is ${contractClaimants}.`);
+			return true;
+		}
     } catch (err) {
         throw err;
     }
