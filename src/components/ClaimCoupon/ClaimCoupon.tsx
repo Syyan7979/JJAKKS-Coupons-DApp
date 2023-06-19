@@ -91,27 +91,62 @@ const ClaimCoupon = () => {
     setShowCards(true);
   };
 
+  // return (
+  //   <div className="claim-coupon flex-wrap">
+  //     <div style={{ width: '100%' }}>
+  //       <h1 className="claim-page-title">CLAIM COUPONS</h1>
+  //     </div>
+
+  //     <div className="searchbar">
+  //       <input
+  //         type="text"
+  //         placeholder="Search coupon code"
+  //         value={searchTerm}
+  //         onChange={handleSearchChange}
+  //       />
+  //       <button className="search-button" onClick={handleCouponCodeSubmit}>
+  //         Search
+  //       </button>
+  //     </div>
+
+  //     {showCards && searchTerm.trim() !== '' && filteredContracts.length > 0 ? (
+  //       <div className="result">
+  //         {filteredContracts.map((contract, index) => (
+  //           <CouponCard
+  //             key={index}
+  //             index={index}
+  //             image_src={bytes2char(hexToUint8Array(contract.image_url))}
+  //             coupon_code={bytes2char(hexToUint8Array(contract.coupon_code))}
+  //             description={bytes2char(hexToUint8Array(contract.description))}
+  //             expiration_date={dayjs
+  //               .unix(contract.expiration_date)
+  //               .format('MMM DD, YYYY')}
+  //             merchant={bytes2char(hexToUint8Array(contract.merchant))}
+  //             disable={false}
+  //           />
+  //         ))}
+  //       </div>
+  //     ) : (
+  //       <div className="result">
+  //         {NFTContracts.length === 0 ? (
+  //           <div>No coupons available</div>
+  //         ) : filteredContracts.length === 0 && showCards ? (
+  //           <div>Coupon code not existing</div>
+  //         ) : null}
+  //       </div>
+  //     )}
+  //   </div>
+  // );
+  
   return (
-    <div className="claim-coupon flex-wrap">
+    <div className='claim-coupon flex-wrap'>
       <div style={{ width: '100%' }}>
-        <h1 className="claim-page-title">CLAIM COUPONS</h1>
+        <h1 className='claim-page-title'>CLAIM COUPONS</h1>
       </div>
-
-      <div className="searchbar">
-        <input
-          type="text"
-          placeholder="Search coupon code"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <button className="search-button" onClick={handleCouponCodeSubmit}>
-          Search
-        </button>
-      </div>
-
-      {showCards && searchTerm.trim() !== '' && filteredContracts.length > 0 ? (
-        <div className="result">
-          {filteredContracts.map((contract, index) => (
+      {NFTContracts.length === 0 ? (
+        <div>No coupons available</div>
+      ) : (
+        NFTContracts.map((contract, index) => (
             <CouponCard
               key={index}
               index={index}
@@ -124,16 +159,7 @@ const ClaimCoupon = () => {
               merchant={bytes2char(hexToUint8Array(contract.merchant))}
               disable={false}
             />
-          ))}
-        </div>
-      ) : (
-        <div className="result">
-          {NFTContracts.length === 0 ? (
-            <div>No coupons available</div>
-          ) : filteredContracts.length === 0 && showCards ? (
-            <div>Coupon code not existing</div>
-          ) : null}
-        </div>
+        ))
       )}
     </div>
   );
