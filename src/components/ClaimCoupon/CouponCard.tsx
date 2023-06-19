@@ -72,7 +72,7 @@ const CouponCard = ({
 
   const handleCouponInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCouponInput(e.target.value);
-    setValidCoupon(e.target.value === coupon_code);
+    setValidCoupon(e.target.value.toUpperCase() === coupon_code);
   };
 
   const handleClaimButtonClick = () => {
