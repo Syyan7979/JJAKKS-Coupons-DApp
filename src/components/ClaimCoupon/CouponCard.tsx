@@ -77,10 +77,10 @@ const CouponCard = ({
             cover={<img alt="example" src={image_src} />}
             actions={
                 disable? []:
-                claimed
-                    ? [<DeleteOutlined key="burn" rev={undefined} onClick={handleBurningCoupon} />]
-                    : [
-                          <PlusCircleOutlined key="claim" rev={undefined} onClick={handleClaimCoupon} />,
+                
+                    [<PlusCircleOutlined key="claim" rev={undefined} onClick={handleClaimCoupon} />,
+                    <DeleteOutlined key="burn" rev={undefined} onClick={handleBurningCoupon} />
+
                       ]
             }
         >
